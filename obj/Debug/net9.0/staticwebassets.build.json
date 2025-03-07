@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "IS0Eq9KWYkLp0aiOcDVmUSw9Qsg9HdGhKctihtYWA1g=",
+  "Source": "RPGAPI",
+  "BasePath": "_content/RPGAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
