@@ -9,10 +9,12 @@ namespace RPGAPI.Models
     public class Usuario
     {
         public int Id { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public byte[]? PassWordHash { get; set; }
+        public string Username { get; set; }
+        public byte[]? PasswordHash { get; set; }
+        public byte[]? PasswordSalt { get; set; }
         public byte[]? Foto { get; set; }
         public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public DateTime? DataAcesso { get; set; }
 
         [NotMapped]
@@ -20,7 +22,5 @@ namespace RPGAPI.Models
         public List<Personagem> Personagens { get; set; } = new List<Personagem>();
         public string? Perfil { get; set; }
         public string? Email { get; set; } = string.Empty;
-        public byte[]? PasswordSalt { get; set; }
-        public double Longitude { get; set; }
     }
 }

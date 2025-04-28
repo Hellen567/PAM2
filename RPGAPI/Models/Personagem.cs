@@ -28,7 +28,6 @@ namespace RPGAPI.Models
         public int Disputas { get; set; }
         public int Vitorias { get; set; }
         public int Derrotas { get; set; }
-
-
+            public List<PersonagemHabilidade> PersonagemHabilidades { get; set; } = [];
     }
 }

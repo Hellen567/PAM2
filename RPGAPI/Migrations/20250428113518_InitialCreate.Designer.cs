@@ -12,8 +12,8 @@ using RPGAPI.Data;
 namespace RPGAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250407115211_MigracaoUmParaUm")]
-    partial class MigracaoUmParaUm
+    [Migration("20250428113518_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,47 @@ namespace RPGAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("RPGAPI.Models.Habilidade", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Dano")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("Varchar");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_HABILIDADES", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Dano = 39,
+                            Nome = "Adormecer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Dano = 41,
+                            Nome = "Congelar"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Dano = 37,
+                            Nome = "Hipnotizar"
+                        });
+                });
 
             modelBuilder.Entity("RPGAPI.Models.Personagem", b =>
                 {
@@ -175,6 +216,68 @@ namespace RPGAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("RPGAPI.Models.PersonagemHabilidade", b =>
+                {
+                    b.Property<int>("PersonagemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HabilidadeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PersonagemId", "HabilidadeId");
+
+                    b.HasIndex("HabilidadeId");
+
+                    b.ToTable("TB_PERSONAGENS_HABILIDADES", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PersonagemId = 1,
+                            HabilidadeId = 1
+                        },
+                        new
+                        {
+                            PersonagemId = 1,
+                            HabilidadeId = 2
+                        },
+                        new
+                        {
+                            PersonagemId = 2,
+                            HabilidadeId = 2
+                        },
+                        new
+                        {
+                            PersonagemId = 3,
+                            HabilidadeId = 2
+                        },
+                        new
+                        {
+                            PersonagemId = 3,
+                            HabilidadeId = 3
+                        },
+                        new
+                        {
+                            PersonagemId = 4,
+                            HabilidadeId = 3
+                        },
+                        new
+                        {
+                            PersonagemId = 5,
+                            HabilidadeId = 1
+                        },
+                        new
+                        {
+                            PersonagemId = 6,
+                            HabilidadeId = 2
+                        },
+                        new
+                        {
+                            PersonagemId = 7,
+                            HabilidadeId = 3
+                        });
+                });
+
             modelBuilder.Entity("RPGAPI.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -196,10 +299,10 @@ namespace RPGAPI.Migrations
                     b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
-                    b.Property<double>("Longitude")
+                    b.Property<double?>("Longitude")
                         .HasColumnType("float");
 
-                    b.Property<byte[]>("PassWordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
@@ -227,7 +330,7 @@ namespace RPGAPI.Migrations
                             Email = "seuEmail@gmail.com",
                             Latitude = -23.520024100000001,
                             Longitude = -46.596497999999997,
-                            PassWordHash = new byte[] { 22, 255, 113, 140, 229, 106, 205, 81, 64, 169, 12, 71, 143, 84, 58, 39, 234, 243, 213, 114, 13, 237, 154, 227, 61, 77, 104, 85, 128, 94, 0, 193, 249, 247, 254, 171, 140, 62, 147, 141, 131, 12, 189, 78, 8, 99, 70, 102, 90, 155, 115, 96, 198, 125, 115, 47, 54, 35, 236, 40, 207, 76, 32, 132 },
+                            PasswordHash = new byte[] { 22, 255, 113, 140, 229, 106, 205, 81, 64, 169, 12, 71, 143, 84, 58, 39, 234, 243, 213, 114, 13, 237, 154, 227, 61, 77, 104, 85, 128, 94, 0, 193, 249, 247, 254, 171, 140, 62, 147, 141, 131, 12, 189, 78, 8, 99, 70, 102, 90, 155, 115, 96, 198, 125, 115, 47, 54, 35, 236, 40, 207, 76, 32, 132 },
                             PasswordSalt = new byte[] { 19, 126, 169, 103, 235, 199, 99, 166, 57, 216, 152, 17, 236, 30, 143, 111, 82, 135, 39, 133, 59, 25, 150, 73, 41, 14, 217, 113, 241, 234, 175, 31, 5, 15, 217, 216, 146, 108, 7, 129, 154, 209, 245, 226, 186, 149, 154, 21, 91, 164, 25, 42, 70, 210, 180, 207, 153, 221, 108, 120, 212, 211, 163, 86 },
                             Perfil = "Admin",
                             Username = "UsuarioAdmin"
@@ -321,6 +424,25 @@ namespace RPGAPI.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("RPGAPI.Models.PersonagemHabilidade", b =>
+                {
+                    b.HasOne("RPGAPI.Models.Habilidade", "Habilidade")
+                        .WithMany("PersonagemHabilidades")
+                        .HasForeignKey("HabilidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RPGAPI.Models.Personagem", "Personagem")
+                        .WithMany("PersonagemHabilidades")
+                        .HasForeignKey("PersonagemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Habilidade");
+
+                    b.Navigation("Personagem");
+                });
+
             modelBuilder.Entity("RpgApi.Models.Arma", b =>
                 {
                     b.HasOne("RPGAPI.Models.Personagem", "Personagem")
@@ -332,9 +454,16 @@ namespace RPGAPI.Migrations
                     b.Navigation("Personagem");
                 });
 
+            modelBuilder.Entity("RPGAPI.Models.Habilidade", b =>
+                {
+                    b.Navigation("PersonagemHabilidades");
+                });
+
             modelBuilder.Entity("RPGAPI.Models.Personagem", b =>
                 {
                     b.Navigation("Arma");
+
+                    b.Navigation("PersonagemHabilidades");
                 });
 
             modelBuilder.Entity("RPGAPI.Models.Usuario", b =>
